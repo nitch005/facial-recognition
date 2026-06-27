@@ -26,6 +26,14 @@ GALLERY_FILE: str = os.path.join(MODEL_DIR, "gallery.json")  # noms + metadonnee
 YUNET_PATH: str = os.path.join(MODEL_DIR, "face_detection_yunet_2023mar.onnx")
 SFACE_PATH: str = os.path.join(MODEL_DIR, "face_recognition_sface_2021dec.onnx")
 
+# Dossier LOCAL du modele InsightFace, fixe a l'interieur du projet.
+# Par defaut, InsightFace met son modele dans ~/.insightface ; sous Windows
+# ce dossier ne persiste pas toujours (droits, OneDrive, antivirus), ce qui
+# provoque un RE-TELECHARGEMENT a chaque lancement. En fixant le cache ici,
+# le modele est telecharge UNE SEULE FOIS puis reutilise indefiniment.
+# (Le modele se trouvera dans : data/insightface/models/<INSIGHTFACE_MODEL>/)
+INSIGHTFACE_ROOT: str = os.path.join(DATA_DIR, "insightface")
+
 # --- Camera ----------------------------------------------------------------
 CAMERA_INDEX: int = 0
 FRAME_WIDTH: int = 640
@@ -62,5 +70,5 @@ COLOR_CAPTURE_RGB = (255, 170, 40)   # orange : enregistrement en cours
 
 def ensure_directories() -> None:
     """Cree les dossiers data/ necessaires s'ils n'existent pas encore."""
-    for directory in (DATA_DIR, MODEL_DIR, EMBEDDINGS_DIR):
+    for directory in (DATA_DIR, MODEL_DIR, EMBEDDINGS_DIR, INSIGHTFACE_ROOT):
         os.makedirs(directory, exist_ok=True)

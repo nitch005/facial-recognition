@@ -14,6 +14,8 @@ comparaison de deux visages se fait alors par simple similarite cosinus.
 """
 from __future__ import annotations
 
+import glob
+import os
 from dataclasses import dataclass
 
 import numpy as np
@@ -28,6 +30,17 @@ class DetectedFace:
     bbox: tuple[int, int, int, int]   # (x, y, largeur, hauteur)
     embedding: np.ndarray             # vecteur L2-normalise (float32)
     score: float                      # confiance de detection
+
+
+def insightface_model_dir() -> str:
+    """Dossier ou est (ou sera) stocke le modele InsightFace dans le projet."""
+    return os.path.join(config.INSIGHTFACE_ROOT, "models", config.INSIGHTFACE_MODEL)
+
+
+def insightface_model_present() -> bool:
+    """True si le modele InsightFace est deja telecharge localement."""
+    directory = insightface_model_dir()
+    return os.path.isdir(directory) and bool(glob.glob(os.path.join(directory, "*.onnx")))
 
 
 def _l2_normalize(vector: np.ndarray) -> np.ndarray:
@@ -45,9 +58,18 @@ class InsightFaceEngine:
     def __init__(self) -> None:
         from insightface.app import FaceAnalysis
 
+        # Cache LOCAL fixe -> telechargement unique (voir config.INSIGHTFACE_ROOT).
+        os.makedirs(config.INSIGHTFACE_ROOT, exist_ok=True)
+        if insightface_model_present():
+            print(f"[Moteur] Modele InsightFace en cache : {insightface_model_dir()}")
+        else:
+            print("[Moteur] Telechargement unique du modele InsightFace "
+                  f"(buffalo_l, ~326 Mo) vers {config.INSIGHTFACE_ROOT} ...")
+
         # On limite aux modules utiles (detection + reconnaissance) pour la vitesse.
         self._app = FaceAnalysis(
             name=config.INSIGHTFACE_MODEL,
+            root=config.INSIGHTFACE_ROOT,
             allowed_modules=["detection", "recognition"],
             providers=["CPUExecutionProvider"],
         )

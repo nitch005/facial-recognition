@@ -100,7 +100,7 @@ pfe_camera/
 
 ## 4. Installation
 
-### Méthode rapide (recommandée)
+### macOS / Linux
 
 ```bash
 cd pfe_technicien_specialise_en_reseaux_informatique_camera
@@ -108,18 +108,34 @@ chmod +x run.sh
 ./run.sh
 ```
 
-> **Premier lancement** : InsightFace télécharge automatiquement son modèle
-> `buffalo_l` (~326 Mo) dans `~/.insightface/`. Une connexion Internet est
-> requise **une seule fois**. Ensuite, l'application fonctionne hors ligne.
+### Windows
 
-### Méthode manuelle
+Double-cliquez sur **`run.bat`**, ou en ligne de commande :
 
-```bash
-python3 -m venv venv
-source venv/bin/activate          # (Windows : venv\Scripts\activate)
-pip install -r requirements.txt
-python main.py
+```bat
+python -m venv venv
+venv\Scripts\pip install -r requirements.txt
+venv\Scripts\python scripts\setup_model.py   :: telechargement UNIQUE du modele
+venv\Scripts\python main.py
 ```
+
+### ⬇️ Téléchargement du modèle — UNE SEULE FOIS
+
+Au premier lancement, le modèle ArcFace (`buffalo_l`, ~326 Mo) est téléchargé
+**une seule fois** dans le dossier du projet : **`data/insightface/`**. Les
+lancements suivants le réutilisent — **plus aucun téléchargement**.
+
+> 💡 **Le modèle se retéléchargeait à chaque `python main.py` ?** (Problème
+> fréquent sous Windows quand `~/.insightface` n'est pas conservé.) C'est
+> **corrigé** : le cache est désormais fixé à l'intérieur du projet. Pour le
+> télécharger à l'avance, lancez une fois :
+> ```bash
+> python scripts/setup_model.py
+> ```
+>
+> 🚫 **Pas d'internet / téléchargement bloqué ?** Ouvrez `src/config.py` et
+> mettez `ENGINE_PREFERENCE = "opencv"`. Le moteur **YuNet + SFace** (déjà
+> inclus dans `data/model/`) fonctionne **sans aucun téléchargement**.
 
 ### ⚠️ Autorisation de la caméra (macOS)
 

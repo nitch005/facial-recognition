@@ -11,8 +11,9 @@ __pycache__/
 data/embeddings/
 data/model/gallery.json
 
-# Modèles InsightFace (téléchargés automatiquement au 1er lancement)
+# Modèles InsightFace (téléchargés une seule fois, trop volumineux pour git)
 .insightface/
+data/insightface/
 
 # Système
 .DS_Store

@@ -1,0 +1,11 @@
+# Dependances du projet de reconnaissance faciale (PFE)
+# Installation : pip install -r requirements.txt
+
+# --- Moteur principal : InsightFace / ArcFace (precision ~99.8%) ---
+insightface==1.0.1                 # SCRFD (detection) + ArcFace (reconnaissance)
+onnxruntime==1.27.0                # execution des modeles ONNX sur CPU
+
+# --- Moteur de secours + traitement d'image ---
+opencv-contrib-python==4.11.0.86   # YuNet + SFace (repli) et acces camera
+numpy==2.2.6                       # calcul vectoriel (empreintes / cosinus)
+pillow==11.3.0                     # affichage video + texte Unicode dans Tkinter

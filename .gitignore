@@ -1,0 +1,28 @@
+# Environnement virtuel Python
+venv/
+.venv/
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Données personnelles / biométriques (NE PAS publier)
+data/embeddings/
+data/model/gallery.json
+
+# Modèles InsightFace (téléchargés automatiquement au 1er lancement)
+.insightface/
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Fichiers temporaires Office (verrous ~$...)
+~$*
+*.tmp
+
+# Rendus temporaires
+docs/slide-*.jpg
+docs/rpage-*.jpg
+docs/tocpage-*.jpg

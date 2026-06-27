@@ -118,7 +118,13 @@ venv\Scripts\pip install -r requirements.txt
 venv\Scripts\python scripts\setup_model.py   :: telechargement UNIQUE du modele
 venv\Scripts\python main.py
 ```
+```bat
+cd Desktop
+cd  facial-recognition/
+source venv/Scripts/activate
+python main.py
 
+```
 ### ⬇️ Téléchargement du modèle — UNE SEULE FOIS
 
 Au premier lancement, le modèle ArcFace (`buffalo_l`, ~326 Mo) est téléchargé
